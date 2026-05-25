@@ -40,6 +40,23 @@ int main() {
         SDL_RenderFillRect(renderer, &rect);
 
         SDL_RenderPresent(renderer);
+
+        const Uint8* keyboardState = SDL_GetKeyboardState(NULL);
+        if (keyboardState[SDL_SCANCODE_LEFT]) {
+            rect.x -= 5;
+        }
+        if (keyboardState[SDL_SCANCODE_RIGHT]) {
+            rect.x += 5;
+        }
+        if (keyboardState[SDL_SCANCODE_UP]) {
+            rect.y -= 5;
+        }
+        if (keyboardState[SDL_SCANCODE_DOWN]) {
+            rect.y += 5;
+        }
+        if (keyboardState[SDL_SCANCODE_ESCAPE]) {
+            running = false;
+        }
     }
 
     SDL_DestroyRenderer(renderer);
