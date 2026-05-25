@@ -25,7 +25,9 @@ int main() {
     bool running = true;
     SDL_Event event;
 
-    SDL_Rect rect = {100, 100, 200, 200};
+    SDL_Rect redSquare = {10, 10, 20, 20}; // Initial position and size of the red square
+    SDL_Rect ghostSquare = {10, 10, 20, 20}; // Ghost square for collision detection
+    SDL_Rect blueWall = {960, 0, 20, 540}; // Blue wall in center of the screen
 
     while (running) {
         while (SDL_PollEvent(&event)) {
@@ -38,8 +40,11 @@ int main() {
 
         // Draw red square
         SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
-        // SDL_Rect rect = {100, 100, 200, 200};
-        SDL_RenderFillRect(renderer, &rect);
+        // SDL_Rect redSquare = {100, 100, 200, 200};
+        SDL_RenderFillRect(renderer, &redSquare);
+        // Draw blue wall
+        SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
+        SDL_RenderFillRect(renderer, &blueWall);
 
         SDL_RenderPresent(renderer);
 
@@ -50,24 +55,47 @@ int main() {
         // Handle keyboard input
         const Uint8* keyboardState = SDL_GetKeyboardState(NULL);
         if (keyboardState[SDL_SCANCODE_LEFT]) {
-            rect.x -= 1;
-            rect.x = std::max(0, rect.x); // prevent moving out of bounds
+            ghostSquare.x -= 1;
+            ghostSquare.x = std::max(0, ghostSquare.x); // prevent moving out of bounds
+            if (SDL_HasIntersection(&ghostSquare, &blueWall)) {
+                ghostSquare.x += 1; // undo movement if colliding with blue wall
+            } else {
+                redSquare.x = ghostSquare.x; // update red square position if not colliding
+            }
         }
         if (keyboardState[SDL_SCANCODE_RIGHT]) {
-            rect.x += 1;
-            rect.x = std::min(windowWidth - rect.w, rect.x); // prevent moving out of bounds
+            ghostSquare.x += 1;
+            ghostSquare.x = std::min(windowWidth - ghostSquare.w, ghostSquare.x); // prevent moving out of bounds
+            if (SDL_HasIntersection(&ghostSquare, &blueWall)) {
+                ghostSquare.x -= 1; // undo movement if colliding with blue wall
+            } else {
+                redSquare.x = ghostSquare.x; // update red square position if not colliding
+            }
         }
         if (keyboardState[SDL_SCANCODE_UP]) {
-            rect.y -= 1;
-            rect.y = std::max(0, rect.y); // prevent moving out of bounds
+            ghostSquare.y -= 1;
+            ghostSquare.y = std::max(0, ghostSquare.y); // prevent moving out of bounds
+                if (SDL_HasIntersection(&ghostSquare, &blueWall)) {
+                    ghostSquare.y += 1; // undo movement if colliding with blue wall
+                } else {
+                    redSquare.y = ghostSquare.y; // update red square position if not colliding
+                }
         }
         if (keyboardState[SDL_SCANCODE_DOWN]) {
-            rect.y += 1;
-            rect.y = std::min(windowHeight - rect.h, rect.y); // prevent moving out of bounds
+            ghostSquare.y += 1;
+            ghostSquare.y = std::min(windowHeight - ghostSquare.h, ghostSquare.y); // prevent moving out of bounds
+            if (SDL_HasIntersection(&ghostSquare, &blueWall)) {
+                ghostSquare.y -= 1; // undo movement if colliding with blue wall
+            } else {
+                redSquare.y = ghostSquare.y; // update red square position if not colliding
+            }
         }
         if (keyboardState[SDL_SCANCODE_ESCAPE]) {
             running = false;
         }
+
+
+
     }
 
     SDL_DestroyRenderer(renderer);
