@@ -120,6 +120,9 @@ int main() {
         // Draw green platform
         SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
         SDL_RenderFillRect(renderer, &greenPlatform);
+        // Draw yellow platform
+        SDL_SetRenderDrawColor(renderer, 255, 255, 0, 255);
+        SDL_RenderFillRect(renderer, &yellowPlatform);
 
         SDL_RenderPresent(renderer);
 
