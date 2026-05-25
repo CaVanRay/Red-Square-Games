@@ -25,6 +25,8 @@ int main() {
     bool running = true;
     SDL_Event event;
 
+    SDL_Rect rect = {100, 100, 200, 200};
+
     while (running) {
         while (SDL_PollEvent(&event)) {
             if (event.type == SDL_QUIT) running = false;
@@ -36,7 +38,7 @@ int main() {
 
         // Draw red square
         SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
-        SDL_Rect rect = {100, 100, 200, 200};
+        // SDL_Rect rect = {100, 100, 200, 200};
         SDL_RenderFillRect(renderer, &rect);
 
         SDL_RenderPresent(renderer);
