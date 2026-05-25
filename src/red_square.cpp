@@ -76,7 +76,7 @@ int main() {
         // **************************************** HORIZONTAL MOVEMENT **************************************** 
         ghostSquare.x += horizontalVelocity;
         ghostSquare.x = std::max(0, std::min(windowWidth - ghostSquare.w, ghostSquare.x)); // prevent moving out of bounds
-        if (SDL_HasIntersection(&ghostSquare, &bluePlatform)) {
+        if (SDL_HasIntersection(&ghostSquare, &bluePlatform)|SDL_HasIntersection(&ghostSquare, &greenPlatform)|SDL_HasIntersection(&ghostSquare, &yellowPlatform)) {
             ghostSquare.x -= horizontalVelocity; // undo movement if colliding with blue platform
         }
 
@@ -85,7 +85,7 @@ int main() {
         ghostSquare.y = std::min(windowHeight - ghostSquare.h, ghostSquare.y);
 
         bool hitWall = false; // Flag to check if we hit the wall
-        if (SDL_HasIntersection(&ghostSquare, &bluePlatform)) {
+        if  (SDL_HasIntersection(&ghostSquare, &bluePlatform)|SDL_HasIntersection(&ghostSquare, &greenPlatform)|SDL_HasIntersection(&ghostSquare, &yellowPlatform)) {
             ghostSquare.y -= verticalVelocity; // undo movement if colliding with blue platform
             if (verticalVelocity > 0) { // If falling down, we are on the ground
                 onGround = true;
