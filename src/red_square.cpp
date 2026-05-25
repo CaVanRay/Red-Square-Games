@@ -33,8 +33,8 @@ int main() {
     SDL_Rect redSquare = {960, 400, 40, 40}; // Initial position and size of the red square
     SDL_Rect ghostSquare = {960, 400, 40, 40}; // Ghost square for collision detection
     SDL_Rect bluePlatform = {960, 1200, 400, 40}; // Blue platform in center of the screen
-    SDL_Rect greenPlatform = {500, 800, 400, 40}; // Green platform on the left side of the screen
-    SDL_Rect yellowPlatform = {1500, 800, 400, 40}; // Yellow platform on the right side of the screen
+    SDL_Rect greenPlatform = {500, 1000, 400, 40}; // Green platform on the left side of the screen
+    SDL_Rect yellowPlatform = {1100, 850, 400, 40}; // Yellow platform on the right side of the screen
 
     float verticalVelocity = 0.0f; // Speed of the red square
     const float GRAVITY = 0.2f; // Gravity affecting the red square
