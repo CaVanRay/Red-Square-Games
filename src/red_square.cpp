@@ -7,7 +7,7 @@ int main() {
         return 1;
     }
 
-    SDL_Window* window = SDL_CreateWindow("Red Square", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 600, 0);
+    SDL_Window* window = SDL_CreateWindow("Red Square", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 1920, 1080, SDL_WINDOW_FULLSCREEN_DESKTOP);
     if (!window) {
         std::cerr << "SDL_CreateWindow Error: " << SDL_GetError() << std::endl;
         SDL_Quit();
@@ -43,18 +43,27 @@ int main() {
 
         SDL_RenderPresent(renderer);
 
+        // getting window size to prevent the square from moving out of bounds
+        int windowWidth, windowHeight;
+        SDL_GetWindowSize(window, &windowWidth, &windowHeight);
+
+        // Handle keyboard input
         const Uint8* keyboardState = SDL_GetKeyboardState(NULL);
         if (keyboardState[SDL_SCANCODE_LEFT]) {
-            rect.x -= 5;
+            rect.x -= 1;
+            rect.x = std::max(0, rect.x); // prevent moving out of bounds
         }
         if (keyboardState[SDL_SCANCODE_RIGHT]) {
-            rect.x += 5;
+            rect.x += 1;
+            rect.x = std::min(windowWidth - rect.w, rect.x); // prevent moving out of bounds
         }
         if (keyboardState[SDL_SCANCODE_UP]) {
-            rect.y -= 5;
+            rect.y -= 1;
+            rect.y = std::max(0, rect.y); // prevent moving out of bounds
         }
         if (keyboardState[SDL_SCANCODE_DOWN]) {
-            rect.y += 5;
+            rect.y += 1;
+            rect.y = std::min(windowHeight - rect.h, rect.y); // prevent moving out of bounds
         }
         if (keyboardState[SDL_SCANCODE_ESCAPE]) {
             running = false;
