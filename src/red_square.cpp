@@ -25,9 +25,11 @@ int main() {
     bool running = true;
     SDL_Event event;
 
-    SDL_Rect redSquare = {10, 10, 20, 20}; // Initial position and size of the red square
-    SDL_Rect ghostSquare = {10, 10, 20, 20}; // Ghost square for collision detection
-    SDL_Rect blueWall = {960, 0, 20, 540}; // Blue wall in center of the screen
+    SDL_Rect redSquare = {960, 400, 40, 40}; // Initial position and size of the red square
+    SDL_Rect ghostSquare = {960, 400, 40, 40}; // Ghost square for collision detection
+    SDL_Rect blueWall = {960, 800, 400, 40}; // Blue wall in center of the screen
+
+    float velocity = 1.0f; // Speed of the red square
 
     while (running) {
         while (SDL_PollEvent(&event)) {
@@ -90,11 +92,27 @@ int main() {
                 redSquare.y = ghostSquare.y; // update red square position if not colliding
             }
         }
+        if (keyboardState[SDL_SCANCODE_SPACE]) {
+            ghostSquare.y -= 3; // jump up
+            ghostSquare.y = std::max(0, ghostSquare.y); // prevent moving out of bounds
+             if (SDL_HasIntersection(&ghostSquare, &blueWall)) {
+                ghostSquare.y += 3; // undo movement if colliding with blue wall
+            } else {
+                redSquare.y = ghostSquare.y; // update red square position if not colliding
+            }
+        }
         if (keyboardState[SDL_SCANCODE_ESCAPE]) {
             running = false;
         }
 
-
+        // gravity effect
+        ghostSquare.y += velocity;
+        ghostSquare.y = std::min(windowHeight - ghostSquare.h, ghostSquare.y);
+        if (SDL_HasIntersection(&ghostSquare, &blueWall)) {
+            ghostSquare.y -= velocity; // undo movement if colliding with blue wall
+        } else {
+            redSquare.y = ghostSquare.y; // update red square position if not colliding
+        }
 
     }
 
