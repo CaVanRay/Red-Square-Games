@@ -92,10 +92,6 @@ int main() {
             verticalVelocity = 0; // Stop vertical movement when hitting the ground
         }
 
-        // **************************************** UPDATE RED SQUARE LOCATION **************************************** 
-        redSquare.x = ghostSquare.x;
-        redSquare.y = ghostSquare.y;
-
         // **************************************** RENDERING **************************************** 
 
         // Clear to black and make background
