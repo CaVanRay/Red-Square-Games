@@ -55,7 +55,7 @@ int main() {
         // Handle keyboard input
         const Uint8* keyboardState = SDL_GetKeyboardState(NULL);
         if (keyboardState[SDL_SCANCODE_UP]) {
-            horizontalVelocity = -5.0f; 
+             
         }
         if (keyboardState[SDL_SCANCODE_DOWN]) {
             horizontalVelocity = 5.0f;
