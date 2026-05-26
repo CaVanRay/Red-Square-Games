@@ -34,8 +34,8 @@ int main() {
     SDL_Event event;
 
     SDL_Rect pongBall = { 640, 640, 20, 20};
-    SDL_Rect leftPaddle = {360, 80, 30, 100}; 
-    SDL_Rect rightPaddle = {360, 1200, 30, 100};
+    SDL_Rect leftPaddle = {360, 80, 20, 200}; 
+    SDL_Rect rightPaddle = {360, 1200, 20, 200};
 
 
     // **************************************** GAME LOOP **************************************** 
