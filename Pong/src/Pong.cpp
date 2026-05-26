@@ -69,25 +69,8 @@ int main() {
         // this will effect ball only
 
         // **************************************** VERTICAL MOVEMENT **************************************** 
-        ghostSquare.y += verticalVelocity;
-        ghostSquare.y = std::min(windowHeight - ghostSquare.h, ghostSquare.y);
 
-        bool hitWall = false; // Flag to check if we hit the wall
-        if  (SDL_HasIntersection(&ghostSquare, &bluePlatform)|SDL_HasIntersection(&ghostSquare, &greenPlatform)|SDL_HasIntersection(&ghostSquare, &yellowPlatform)) {
-            ghostSquare.y -= verticalVelocity; // undo movement if colliding with blue platform
-            if (verticalVelocity > 0) { // If falling down, we are on the ground
-                onGround = true;
-                verticalVelocity = 0; // Stop vertical movement when hitting the ground
-                hitWall = true;
-            } else if (verticalVelocity < 0) { // If moving up, we hit the ceiling
-                verticalVelocity = 0; // Stop vertical movement when hitting the ceiling
-            }   hitWall = true;
-        }
-
-        if (!hitWall && ghostSquare.y >= windowHeight - ghostSquare.h) {
-            onGround = true; // We are on the ground if we hit the bottom of the window
-            verticalVelocity = 0; // Stop vertical movement when hitting the ground
-        }
+        // this will effect ball & paddles
 
         // **************************************** RENDERING **************************************** 
 
