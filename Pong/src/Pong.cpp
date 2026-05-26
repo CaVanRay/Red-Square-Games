@@ -13,7 +13,7 @@ int main() {
         return 1;
     }
 
-    SDL_Window* window = SDL_CreateWindow("Red Square", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_FULLSCREEN_DESKTOP);
+    SDL_Window* window = SDL_CreateWindow("Pong", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_FULLSCREEN_DESKTOP);
     if (!window) {
         std::cerr << "SDL_CreateWindow Error: " << SDL_GetError() << std::endl;
         SDL_Quit();
@@ -34,8 +34,8 @@ int main() {
     SDL_Event event;
 
     SDL_Rect pongBall = { 640, 640, 20, 20};
-    SDL_Rect leftPaddle = {960, 1200, 400, 40}; 
-    SDL_Rect rightPaddle = {500, 1000, 400, 40};
+    SDL_Rect leftPaddle = {360, 80, 30, 100}; 
+    SDL_Rect rightPaddle = {360, 1200, 30, 100};
 
 
     // **************************************** GAME LOOP **************************************** 
