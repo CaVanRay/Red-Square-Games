@@ -33,6 +33,7 @@ int main() {
     bool running = true;
     SDL_Event event;
 
+    SDL_Rect centerLine = { 640, 640, 720, 10};
     SDL_Rect pongBall = { 640, 640, 20, 20};
     SDL_Rect leftPaddle = {360, 80, 20, 200}; 
     SDL_Rect rightPaddle = {360, 1200, 20, 200};
