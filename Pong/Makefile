@@ -6,10 +6,10 @@ CFLAGS = $(shell sdl2-config --cflags)
 LDFLAGS = $(shell sdl2-config --libs)
 
 # Source file
-SRC = src/red_square.cpp
+SRC = src/Pong.cpp
 
 # Executable name
-TARGET = red_square
+TARGET = Pong
 
 # Default target
 all:	$(TARGET)
