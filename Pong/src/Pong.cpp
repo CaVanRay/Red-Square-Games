@@ -33,10 +33,15 @@ int main() {
     bool running = true;
     SDL_Event event;
 
-    SDL_Rect centerLine = { 640, 640, 720, 10};
-    SDL_Rect pongBall = { 640, 640, 20, 20};
-    SDL_Rect leftPaddle = {360, 80, 20, 200}; 
-    SDL_Rect rightPaddle = {360, 1200, 20, 200};
+    SDL_Rect centerLine = { 1280, 0, 1, 2800};
+    SDL_Rect pongBall = { 1270, 740, 20, 20};
+    SDL_Rect leftPaddle = {20, 640, 20, 200}; 
+    SDL_Rect rightPaddle = {2520, 640, 20, 200};
+
+    float LeftVertVelocity = 0.0f;
+    float rightVertVelocity = 0.0f;
+    float ballVertVelocity = 0.0f;
+    float ballHorVelocity = 25.0f;
 
 
     // **************************************** GAME LOOP **************************************** 
@@ -55,15 +60,21 @@ int main() {
         // Handle keyboard input
         const Uint8* keyboardState = SDL_GetKeyboardState(NULL);
         if (keyboardState[SDL_SCANCODE_UP]) {
-             
+             leftPaddle.y -= 10;
+             rightPaddle.y -= 10;
         }
         if (keyboardState[SDL_SCANCODE_DOWN]) {
-            
+            leftPaddle.y += 10;
+            rightPaddle.y += 10;
         }
-        if (keyboardState[SDL_SCANCODE_SPACE) {
-    
-        // might add speed boost here
-            
+        if (keyboardState[SDL_SCANCODE_SPACE]) {
+            if(keyboardState[SDL_SCANCODE_UP]){
+                leftPaddle.y -= 30;
+                rightPaddle.y -= 30;
+            }else if(keyboardState[SDL_SCANCODE_DOWN]){
+                leftPaddle.y += 30;
+                rightPaddle.y += 30;
+            }            
         }
         if (keyboardState[SDL_SCANCODE_ESCAPE]) {
             running = false;
@@ -72,6 +83,17 @@ int main() {
         // **************************************** HORIZONTAL MOVEMENT **************************************** 
 
         // this will effect ball only
+        pongBall.x += ballHorVelocity;
+
+        if(SDL_HasIntersection(&pongBall, &leftPaddle)){
+            ballHorVelocity = 25;
+        }
+        if(SDL_HasIntersection(&pongBall, &rightPaddle)){
+            ballHorVelocity = -25;
+        }
+        if(pongBall.x < 0 || pongBall.x > windowWidth){
+            pongBall.x = 1270;
+        }
 
         // **************************************** VERTICAL MOVEMENT **************************************** 
 
