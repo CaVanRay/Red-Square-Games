@@ -44,6 +44,7 @@ int main() {
     SDL_Rect pongBall = { windowWidth / 2, windowHeight / 2, 20, 20};
     SDL_Rect leftPaddle = {20, windowHeight / 2, 20, 200}; 
     SDL_Rect rightPaddle = {windowWidth - 40, windowHeight / 2, 20, 200};
+    SDL_Rect ghostPaddle = {windowWidth - 40, windowHeight / 2, 20, 200};
 
     // VELOCITIES: PIXELS PER SECOND
 
@@ -82,24 +83,29 @@ int main() {
         float moveStep = paddleVelocity * deltaTime;
         if (keyboardState[SDL_SCANCODE_UP]) {
              leftPaddle.y -= (int)moveStep;
-             rightPaddle.y -= (int)moveStep;
+             //rightPaddle.y -= (int)moveStep;
         }
         if (keyboardState[SDL_SCANCODE_DOWN]) {
             leftPaddle.y += (int)moveStep;
-            rightPaddle.y += (int)moveStep;
+            //rightPaddle.y += (int)moveStep;
         }
         if (keyboardState[SDL_SCANCODE_SPACE]) {
             float boostStep = (paddleVelocity * 3.0f) * deltaTime;
             if(keyboardState[SDL_SCANCODE_UP]){
                 leftPaddle.y -= (int)boostStep;
-                rightPaddle.y -= (int)boostStep;
+                //rightPaddle.y -= (int)boostStep;
             }else if(keyboardState[SDL_SCANCODE_DOWN]){
                 leftPaddle.y += (int)boostStep;
-                rightPaddle.y += (int)boostStep;
+                //rightPaddle.y += (int)boostStep;
             }            
         }
         if (keyboardState[SDL_SCANCODE_ESCAPE]) {
             running = false;
+        }
+        if(ghostPaddle.y > rightPaddle.y){
+            rightPaddle.y += (int)moveStep;
+        }else if(ghostPaddle.y < rightPaddle.y){
+            rightPaddle.y -= (int)moveStep;
         }
 
         // **************************************** MOVEMENT **************************************** 
@@ -131,7 +137,7 @@ int main() {
         }
 
         // leftPaddle.y = pongBall.y - 100;
-        rightPaddle.y = pongBall.y - 100;
+        ghostPaddle.y = pongBall.y - 100;
 
 
         // **************************************** RENDERING **************************************** 
