@@ -14,6 +14,16 @@ int main() {
         return 1;
     }
 
+    TTF_Init();
+    
+    TTF_Font* scoreFont = TTF_OpenFont("arial.ttf", 40);
+
+    if(!scoreFont){
+        std::cerr << "Failed to load font: %s\n", TTF_GetError();
+    }    
+
+    SDL_Color textColor = { 255, 255, 255, 255};
+
     SDL_Window* window = SDL_CreateWindow("Pong", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 1920, 720, SDL_WINDOW_FULLSCREEN_DESKTOP);
     if (!window) {
         std::cerr << "SDL_CreateWindow Error: " << SDL_GetError() << std::endl;
