@@ -15,7 +15,7 @@ int main() {
     }
 
     TTF_Init();
-    
+
     TTF_Font* scoreFont = TTF_OpenFont("arial.ttf", 40);
 
     if(!scoreFont){
@@ -70,6 +70,11 @@ int main() {
     const int TARGET_FPS = 60;
     const float FRAME_DELAY = 1000.0f / TARGET_FPS;
 
+    // PLAYER SCORES
+
+    int leftPlayerScore = 0;
+    int rightPlayerScore = 0;
+
 
     // **************************************** GAME LOOP **************************************** 
 
@@ -86,6 +91,20 @@ int main() {
         while(SDL_PollEvent(&event)){
             if(event.type == SDL_QUIT) running = false;
         }
+
+        std::string leftPScoreText = std::to_string(leftPlayerScore);
+        std::string rightPScoreText = std::to_string(rightPlayerScore);
+
+        SDL_Surface* leftPSurface = TTF_RenderText_Solid(scoreFont, leftPlayerScore.c_str());
+        SDL_Surface* rightPSurface = TTF_RenderText_Solid(scoreFont, rightPlayerScore.c_str());
+
+        SDL_Texture* leftPTexture = SDL_CreateTextureFromSurface(renderer, leftPSurface);
+        SDL_Texture* rightPTexture = SDL_CreateTextureFromSurface(renderer, rightPSurface);
+
+        SDL_Rect leftPRect = { 200, 20, leftPSurface->w, leftPSurface->h};
+        SDL_Rect rightPRect = { 600, 20, rightPSurface->w, rightPSurface->h};
+
+        
 
     // **************************************** KEYBOARD INPUT **************************************** 
 
