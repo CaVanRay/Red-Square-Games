@@ -109,8 +109,8 @@ int main() {
         SDL_Texture* leftPTexture = SDL_CreateTextureFromSurface(renderer, leftPSurface);
         SDL_Texture* rightPTexture = SDL_CreateTextureFromSurface(renderer, rightPSurface);
 
-        SDL_Rect leftPRect = { windowWidth / 4, 20, leftPSurface->w, leftPSurface->h};
-        SDL_Rect rightPRect = { (windowWidth / 4) * 3, 20, rightPSurface->w, rightPSurface->h};
+        SDL_Rect leftPRect = { windowWidth / 4, 20, leftPSurface->w * 2, leftPSurface->h * 2};
+        SDL_Rect rightPRect = { (windowWidth / 4) * 3, 20, rightPSurface->w * 2, rightPSurface->h * 2};
         
     // **************************************** KEYBOARD INPUT **************************************** 
 
@@ -176,6 +176,7 @@ int main() {
             ballVertVelocity = -ballVertVelocity;
         }
         if(pongBall.x < 0 || pongBall.x > windowWidth){
+            (pongBall.x < 0) ? rightPlayerScore++ : leftPlayerScore++;
             pongBall.x = windowWidth / 2 - 10;
             pongBall.y = windowHeight / 2;
             ballHorVelocity = (ballHorVelocity > 0) ? 1000.0f : -1000.0f;
