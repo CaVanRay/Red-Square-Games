@@ -187,6 +187,8 @@ int main() {
 
     // **************************************** CLEANUP **************************************** 
 
+    TTF_CloseFont(scoreFont);
+    TTF_Quit();
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();
