@@ -131,7 +131,8 @@ int main() {
             }else if(pongBall.y > rightPaddle.y + 65){
                 
             }else{
-                
+                ballVertVelocity = 0;
+
             }
         }
         if(pongBall.y <= 0 || pongBall.y + pongBall.h >= windowHeight){
