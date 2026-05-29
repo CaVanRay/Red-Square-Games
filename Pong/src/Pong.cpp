@@ -1,5 +1,6 @@
 #include <SDL2/SDL.h>
 #include <SDL_ttf.h>
+#include <SDL2/SDL_mixer.h>
 #include <iostream>
 #include <string>
 #include <random>
@@ -12,6 +13,11 @@ int main() {
     if (SDL_Init(SDL_INIT_VIDEO) != 0) {
         std::cerr << "SDL_Init Error: " << SDL_GetError() << std::endl;
         return 1;
+    }
+
+    if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0){
+       std::cerr << "SDL_mixer could not initialize! Error: " << Mix_GetError() << std::endl;
+       return 1;
     }
 
     TTF_Init();
