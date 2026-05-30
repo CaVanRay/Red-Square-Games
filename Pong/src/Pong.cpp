@@ -86,6 +86,11 @@ int main() {
     float ballVertVelocity = 1000.0f;
     float ballHorVelocity = 1000.0f;
 
+    // PADDLE LOCATIONS EACH FRAME;
+
+    float previousLeftPaddleY = leftPaddle.y;
+    float previousrightPaddleY = rightPaddle.y;
+
     // TIMING VARIABLES
 
     Uint64 lastTime = SDL_GetTicks64();
