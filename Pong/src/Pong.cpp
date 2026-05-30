@@ -21,26 +21,36 @@ int main() {
     }
 
     Mix_Chunk* hitSound = NULL;
+    Mix_Chunk* scoreSound = NULL;
     Mix_Music* bgMusic = NULL;
 
     hitSound = Mix_LoadWAV("assets/quack.mp3");
     if(hitSound == NULL){
-        std::cerr << "Failed to load hit sound! SDL_mixer Error: %s\n", Mix_GetError();
+        std::cerr << "Failed to load hit sound! SDL_mixer Error: " << Mix_GetError() << std::endl;
+        return 1;
     }
 
+    scoreSound = Mix_LoadWAV("assets/score.mp3");
+    if(scoreSound == NULL){
+        std::cerr << "Failed to load scoring sound! SDL_mixer Error: " << Mix_GetError() << std::endl;
+        return 1;
+    }
 
+    bgMusic = Mix_LoadMUS("assets/pongBackground.mp3");
+    if(bgMusic == NULL){
+        std::cerr << "Failed to load background music! SDL_mixer Error: " << Mix_GetError() << std::endl;
+        return 1;
+    }
 
-    TTF_Init();
+    if(TTF_Init() < 0){
+        std::cerr << "SDL_ttf initialization failed: " << TTF_GetError() << std::endl;
+        return 1;
+    }
 
     TTF_Font* scoreFont = TTF_OpenFont("assets/arial.ttf", 40);
 
-    if (TTF_Init() < 0) {
-       std::cerr << "SDL_ttf initialization failed: " << TTF_GetError() << std::endl;
-       return 1;
-    }
-
     if(!scoreFont){
-        std::cerr << "Failed to load font: %s\n" << TTF_GetError() << std::endl;
+        std::cerr << "Failed to load font: " << TTF_GetError() << std::endl;
         return 1;
     }    
 
@@ -102,6 +112,11 @@ int main() {
 
     int leftPlayerScore = 0;
     int rightPlayerScore = 0;
+
+    // START BACKGROUND MUSIC BEFORE LOOP
+    if (bgMusic) {
+        Mix_PlayMusic(bgMusic, -1); // -1 loops infinitely
+    }
 
 
     // **************************************** GAME LOOP **************************************** 
@@ -179,14 +194,15 @@ int main() {
 
 
         if(abs(leftPaddleVelocity) < EPSILON){
-            leftPaddleVelocity = 1;
+            leftPaddleVelocity = 0;
         }
         if(abs(rightPaddleVelocity) < EPSILON){
-            rightPaddleVelocity = 1;
+            rightPaddleVelocity = 0;
         }
 
         if(SDL_HasIntersection(&pongBall, &leftPaddle)){
             ballHorVelocity = 1000.4f;
+            pongBall.x = leftPaddle.x + leftPaddle.w + 1;
             Mix_PlayChannel(-1, hitSound, 0);
             if(pongBall.y < leftPaddle.y + 35){ // top portion of paddle
                 ballVertVelocity = (ballVertVelocity - 500.0f) + leftPaddleVelocity;
@@ -201,6 +217,7 @@ int main() {
 
         if(SDL_HasIntersection(&pongBall, &rightPaddle)){
             ballHorVelocity = -1000.0f;
+            pongBall.x = rightPaddle.x - rightPaddle.w -1;
             Mix_PlayChannel(-1, hitSound, 0);
             if(pongBall.y < rightPaddle.y + 35){
                 ballVertVelocity = (ballVertVelocity - 500.0f) + rightPaddleVelocity;
@@ -218,6 +235,7 @@ int main() {
             ballVertVelocity = -ballVertVelocity;
         }
         if(pongBall.x < 0 || pongBall.x > windowWidth){
+            Mix_PlayChannel(-1, scoreSound, 0);
             (pongBall.x < 0) ? rightPlayerScore++ : leftPlayerScore++;
             pongBall.x = windowWidth / 2 - 10;
             pongBall.y = windowHeight / 2;
