@@ -189,25 +189,31 @@ int main() {
             ballHorVelocity = 1000.4f;
             Mix_PlayChannel(-1, hitSound, 0);
             if(pongBall.y < leftPaddle.y + 35){ // top portion of paddle
-                ballVertVelocity = (ballVertVelocity - 500.0f) += leftPaddleVelocity;
+                ballVertVelocity = (ballVertVelocity - 500.0f) + leftPaddleVelocity;
             }else if(pongBall.y > leftPaddle.y + 65){ // bottom porton of paddle
-                ballVertVelocity = (ballVertVelocity + 500.0f) += leftPaddleVelocity;
+                ballVertVelocity = (ballVertVelocity + 500.0f) + leftPaddleVelocity;
             }else{ // middle portion of paddle
-                ballVertVelocity = (ballVertVelocity / 2) += leftPaddleVelocity;
+                ballVertVelocity = (ballVertVelocity / 2) + leftPaddleVelocity;
             }
         }
+
+        previousLeftPaddleY = leftPaddle.y;
+
         if(SDL_HasIntersection(&pongBall, &rightPaddle)){
             ballHorVelocity = -1000.0f;
             Mix_PlayChannel(-1, hitSound, 0);
             if(pongBall.y < rightPaddle.y + 35){
-                ballVertVelocity = (ballVertVelocity - 500.0f) += rightPaddleVelocity;
+                ballVertVelocity = (ballVertVelocity - 500.0f) + rightPaddleVelocity;
             }else if(pongBall.y > rightPaddle.y + 65){
-                ballVertVelocity = (ballVertVelocity + 500.0f) += rightPaddleVelocity;
+                ballVertVelocity = (ballVertVelocity + 500.0f) + rightPaddleVelocity;
             }else{
-                ballVertVelocity = (ballVertVelocity / 2) += rightPaddleVelocity;
+                ballVertVelocity = (ballVertVelocity / 2) + rightPaddleVelocity;
 
             }
         }
+
+        previousrightPaddleY = rightPaddle.y;
+
         if(pongBall.y <= 0 || pongBall.y + pongBall.h >= windowHeight){
             ballVertVelocity = -ballVertVelocity;
         }
