@@ -134,20 +134,6 @@ int main() {
         while(SDL_PollEvent(&event)){
             if(event.type == SDL_QUIT) running = false;
         }
-
-        // SCORE TEXT
-
-        std::string leftPScoreText = std::to_string(leftPlayerScore);
-        std::string rightPScoreText = std::to_string(rightPlayerScore);
-
-        SDL_Surface* leftPSurface = TTF_RenderText_Solid(scoreFont, leftPScoreText.c_str(), textColor);
-        SDL_Surface* rightPSurface = TTF_RenderText_Solid(scoreFont, rightPScoreText.c_str(), textColor);
-
-        SDL_Texture* leftPTexture = SDL_CreateTextureFromSurface(renderer, leftPSurface);
-        SDL_Texture* rightPTexture = SDL_CreateTextureFromSurface(renderer, rightPSurface);
-
-        SDL_Rect leftPRect = { windowWidth / 4, 20, leftPSurface->w * 2, leftPSurface->h * 2};
-        SDL_Rect rightPRect = { (windowWidth / 4) * 3, 20, rightPSurface->w * 2, rightPSurface->h * 2};
         
     // **************************************** KEYBOARD INPUT **************************************** 
 
@@ -258,6 +244,21 @@ int main() {
         SDL_RenderFillRect(renderer, &pongBall);
         SDL_RenderFillRect(renderer, &leftPaddle);
         SDL_RenderFillRect(renderer, &rightPaddle);
+
+        // SCORE TEXT
+
+        std::string leftPScoreText = std::to_string(leftPlayerScore);
+        std::string rightPScoreText = std::to_string(rightPlayerScore);
+
+        SDL_Surface* leftPSurface = TTF_RenderText_Solid(scoreFont, leftPScoreText.c_str(), textColor);
+        SDL_Surface* rightPSurface = TTF_RenderText_Solid(scoreFont, rightPScoreText.c_str(), textColor);
+
+        SDL_Texture* leftPTexture = SDL_CreateTextureFromSurface(renderer, leftPSurface);
+        SDL_Texture* rightPTexture = SDL_CreateTextureFromSurface(renderer, rightPSurface);
+
+        SDL_Rect leftPRect = { windowWidth / 4, 20, leftPSurface->w * 2, leftPSurface->h * 2};
+        SDL_Rect rightPRect = { (windowWidth / 4) * 3, 20, rightPSurface->w * 2, rightPSurface->h * 2};
+
         SDL_RenderCopy(renderer, leftPTexture, NULL, &leftPRect);
         SDL_RenderCopy(renderer, rightPTexture, NULL, &rightPRect);
        
