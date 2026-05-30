@@ -20,14 +20,24 @@ int main() {
        return 1;
     }
 
+    Mix_Chunk* hitSound = NULL;
+    Mix_Music* bgMusic = NULL;
+
+    hitSound = Mix_LoadWAV("assets/quack.mp3");
+    if(hitSound == NULL){
+        std::cerr << "Failed to load hit sound! SDL_mixer Error: %s\n", Mix_GetError();
+    }
+
+
+
     TTF_Init();
 
-    TTF_Font* scoreFont = TTF_OpenFont("arial.ttf", 40);
+    TTF_Font* scoreFont = TTF_OpenFont("assets/arial.ttf", 40);
 
-    //if (TTF_Init() < 0) {
-    //    std::cerr << "SDL_ttf initialization failed: " << TTF_GetError() << std::endl;
-    //    return 1;
-    //}
+    if (TTF_Init() < 0) {
+       std::cerr << "SDL_ttf initialization failed: " << TTF_GetError() << std::endl;
+       return 1;
+    }
 
     if(!scoreFont){
         std::cerr << "Failed to load font: %s\n" << TTF_GetError() << std::endl;
@@ -159,6 +169,7 @@ int main() {
 
         if(SDL_HasIntersection(&pongBall, &leftPaddle)){
             ballHorVelocity = 1000.4f;
+            Mix_PlayChannel(-1, hitSound, 0);
             if(pongBall.y < leftPaddle.y + 35){ // top portion of paddle
                 ballVertVelocity = ballVertVelocity - 500.0f;
             }else if(pongBall.y > leftPaddle.y + 65){ // bottom porton of paddle
@@ -169,6 +180,7 @@ int main() {
         }
         if(SDL_HasIntersection(&pongBall, &rightPaddle)){
             ballHorVelocity = -1000.0f;
+            Mix_PlayChannel(-1, hitSound, 0);
             if(pongBall.y < rightPaddle.y + 35){
                 ballVertVelocity = ballVertVelocity - 500.0f;
             }else if(pongBall.y > rightPaddle.y + 65){
@@ -224,6 +236,10 @@ int main() {
 
     // **************************************** CLEANUP **************************************** 
 
+    Mix_FreeChunk(hitSound);
+    Mix_CloseAudio();
+    hitSound = NULL;
+    bgMusic = NULL;
     TTF_CloseFont(scoreFont);
     TTF_Quit();
     SDL_DestroyRenderer(renderer);
