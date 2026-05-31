@@ -11,7 +11,7 @@ LDFLAGS := $(shell $(PKG_CONFIG) --libs sdl2 SDL2_mixer SDL2_ttf)
 SRC = src/SideScroller.cpp
 
 # Executable name
-TARGET = Pong
+TARGET = SideScroller
 
 # Default target
 all: $(TARGET)
